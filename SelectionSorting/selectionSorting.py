@@ -1,6 +1,4 @@
 class Solution: 
-    def select(self, arr, i):
-        pass
     def selectionSort(self, arr,n):
         min_idx  = 0
         for i in range(n-1):  
