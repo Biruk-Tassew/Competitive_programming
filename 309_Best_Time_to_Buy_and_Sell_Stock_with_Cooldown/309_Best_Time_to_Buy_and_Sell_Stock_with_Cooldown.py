@@ -1,3 +1,5 @@
+# Top-down ---on progress
+# Bottom-up
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         pos = -prices[0]
