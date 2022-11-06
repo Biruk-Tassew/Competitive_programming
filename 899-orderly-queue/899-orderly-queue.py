@@ -3,8 +3,8 @@ class Solution:
         s = list(s)
 
         if k == 1:
-            temp = []
+            temp = s
             for i in range(len(s)):
-                temp.append(s[i:]+s[:i])
-            return ''.join(min(temp))
+                temp = min(temp, s[i:]+s[:i])
+            return ''.join(temp)
         return "".join(sorted(s))
