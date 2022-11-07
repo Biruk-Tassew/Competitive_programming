@@ -1,18 +1,17 @@
 class Solution:
     def maximum69Number (self, num: int) -> int:
-        factor = 10**len(str(num))
-        ans = 0
-        flag = 1
         
-        while factor:
-            if flag and num//factor == 6:
-                ans += 9*factor
-                flag = 0
-            else:
-                ans += (num//factor)*factor
+        temp_num = num
+        six_idx = -1
+        idx = 0
+        while temp_num:
+            if temp_num%10 == 6:
+                six_idx = idx
                 
-            num %= factor
-            factor //= 10
+            idx += 1
+            temp_num //= 10
             
-                
-        return ans
+        if six_idx == -1:
+            return num
+        
+        return num + 3*(10**six_idx)
