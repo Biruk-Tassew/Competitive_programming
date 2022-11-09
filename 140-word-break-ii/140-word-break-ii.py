@@ -1,29 +1,24 @@
-class TrieNode:
-    def __init__(self, char):
-        self.char = char
-        self.is_end = False
-        self.children = {}
-        
 class Solution:
-    def wordBreak(self, st: str, wordDict: List[str]):
+    def wordBreak(self, s: str, wordDict: List[str]):
         wordDict = set(wordDict)
-        curr = []
+        cur = []
         ans = []
-        def backtrack(s, e):
-            if e == len(st):
-                if st[s:e] in wordDict:
-                    curr.append(st[s:e+1])
-                    ans.append(" ".join(curr))
-                    curr.pop()
-                return
-            if e > len(st): return
+        
+        def backtrack(s_idx, e_idx):
+            if e_idx == len(s):
+                if s[s_idx:e_idx] in wordDict:
+                    cur.append(s[s_idx:e_idx])
+                    ans.append(" ".join(cur))
+                    cur.pop()
+                return 
             
-            if st[s:e] in wordDict:
-                curr.append(st[s:e])
-                backtrack(e, e+1)
-                curr.pop()
+            if s[s_idx:e_idx] in wordDict:
+                cur.append(s[s_idx:e_idx])
+                backtrack(e_idx, e_idx+1)
+                cur.pop()
                 
-            backtrack(s, e+1)
+            backtrack(s_idx, e_idx+1)
+            
         backtrack(0, 1)
         return ans
             
