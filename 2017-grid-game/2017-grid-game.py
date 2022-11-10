@@ -13,7 +13,6 @@ class Solution:
         print(pre_one, pre_two)
         for i in range(len(grid[0])-1):
             if pre_one[i+1] < pre_two[0]-pre_two[i+1]:
-                print(pre_two[i-1], pre_two[i])
                 return max(pre_one[i+1], pre_two[0]-pre_two[i])
             
         return pre_two[0]-pre_two[-1]
