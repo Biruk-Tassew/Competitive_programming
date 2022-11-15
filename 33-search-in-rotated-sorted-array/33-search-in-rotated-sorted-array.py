@@ -6,10 +6,8 @@ class Solution:
         while left <= right:
             mid = (left+right)//2
             
-            
             if nums[mid] == target:
                 return mid
-            
             if nums[left] > nums[mid]:
                 if nums[mid] < target and nums[right] >= target:
                     left = mid + 1
@@ -20,5 +18,6 @@ class Solution:
                     right = mid - 1
                 else:
                     left = mid + 1
+                    
                     
         return -1
