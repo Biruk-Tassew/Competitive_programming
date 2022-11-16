@@ -15,7 +15,7 @@ class Solution:
             
             if guess(mid) == 1:
                 left = mid + 1
-            elif guess(mid) == -1:
-                right = mid
             else:
-                return mid
+                right = mid
+        return left
+            
