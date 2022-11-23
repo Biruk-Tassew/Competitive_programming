@@ -6,32 +6,35 @@
 #         self.right = right
 class Solution:
     def treeQueries(self, root: Optional[TreeNode], queries: List[int]) -> List[int]:
-        self.levels = defaultdict(int)
-        self.max_depth = defaultdict(int)
-        self.first_largest = defaultdict(int)
-        self.second_largest = defaultdict(int)
+        self.post_height = defaultdict(int)
+        self.pre_height = defaultdict(int)
+        self.max_height = 0
+        self.pre_dfs(root, 0)
+        self.max_height = 0
+        self.post_dfs(root, 0)
         
-        self.dfs(root, 0)
         res = []
         for query in queries:
-            if self.first_largest[self.levels[query]] == self.max_depth[query]:
-                res.append(self.levels[query] + self.second_largest[self.levels[query]] - 1)
-            else:
-                res.append(self.levels[query] + self.first_largest[self.levels[query]] - 1)
+            res.append(max(self.post_height[query], self.pre_height[query]))
                 
         return res
         
-    def dfs(self, node, cur_lvl):
+    def post_dfs(self, node, cur_lvl):
         if not node:
             return 0
         
-        self.levels[node.val] = cur_lvl
-        self.max_depth[node.val] = 1+max(self.dfs(node.left, cur_lvl+1), self.dfs(node.right, cur_lvl+1)) 
         
-        if self.first_largest[cur_lvl] < self.max_depth[node.val]:
-            self.second_largest[cur_lvl] = self.first_largest[cur_lvl]
-            self.first_largest[cur_lvl] = self.max_depth[node.val]
-        elif self.second_largest[cur_lvl] < self.max_depth[node.val]:
-            self.second_largest[cur_lvl] = self.max_depth[node.val]
-            
-        return self.max_depth[node.val]
+        self.post_height[node.val] = self.max_height
+        self.max_height = max(self.max_height, cur_lvl)
+        self.post_dfs(node.right, cur_lvl+1)
+        self.post_dfs(node.left, cur_lvl+1)
+        
+        
+    def pre_dfs(self, node, cur_lvl):
+        if not node:
+            return 0
+        
+        self.pre_height[node.val] = self.max_height
+        self.max_height = max(self.max_height, cur_lvl)
+        self.pre_dfs(node.left, cur_lvl+1)
+        self.pre_dfs(node.right, cur_lvl+1)
