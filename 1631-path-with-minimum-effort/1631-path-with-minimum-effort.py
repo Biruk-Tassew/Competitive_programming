@@ -1,23 +1,44 @@
 class Solution:
     def minimumEffortPath(self, heights: List[List[int]]) -> int:
+        abs_max = 0
+        abs_min = float('inf')
+        for row in range(len(heights)):
+            for col in range(len(heights[0])):
+                abs_min = min(abs_min, heights[row][col])
+                abs_max = max(abs_max, heights[row][col])
+                
+        left = 0
+        right = abs_max-abs_min
         
-        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
-        all_efforts = [[float('inf')]*len(heights[0]) for _ in range(len(heights))]
-        all_efforts[0][0] = 0
-        heap = [(0, 0, 0)]
-        
-        while heap:
-            cur_effort, row, col = heapq.heappop(heap)
+        while left < right:
+            mid = (left+right)//2
             
-            if row==len(heights)-1 and col==len(heights[0])-1:
-                return cur_effort
+            if self.bfs(0, 0, mid, heights):
+                right = mid
+            else:
+                left = mid + 1
+                
+        return right
+                
+        
+    def bfs(self, row, col, cur_max, heights):
+        directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        que = deque([(row, col)])
+        visited = set()
+        
+        while que:
+            row, col = que.popleft()
             
             for i in directions:
-                n_r = row+i[0]
-                n_c = col+i[1]
+                n_r = row + i[0]
+                n_c = col + i[1]
                 
-                if 0 <= n_r < len(heights) and 0 <= n_c < len(heights[0]):
-                    n_effort = max(cur_effort, abs(heights[row][col]-heights[n_r][n_c]))
-                    if n_effort < all_efforts[n_r][n_c]:
-                        all_efforts[n_r][n_c] = n_effort
-                        heapq.heappush(heap, (n_effort, n_r, n_c))
+                if 0 <= n_r < len(heights) and 0 <= n_c < len(heights[0]) and abs(heights[n_r][n_c]-heights[row][col]) <= cur_max and (n_r, n_c) not in visited:
+                    if n_r == len(heights)-1 and n_c == len(heights[0])-1:
+                        return True
+                    
+                    visited.add((n_r, n_c))
+                    que.append((n_r, n_c))
+                    
+        return False
+            
