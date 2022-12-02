@@ -7,3 +7,6 @@ class Solution:
         word_two_cnt = Counter(word2)
         return Counter(word_one_cnt.values()) == Counter(word_two_cnt.values())
         
+        
+        
+        
