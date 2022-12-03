@@ -1,13 +1,13 @@
 class Solution:
     def frequencySort(self, s: str) -> str:
         count = Counter(s)
-        ans = []
+        bucket = [[] for _ in range(len(s)+1)]
         for i in count:
-            ans.append([count[i], i])
+            bucket[count[i]].append(i)
             
-        ans.sort(reverse=True)
-        res = ""
-        for i in ans:
-            res += i[1]*i[0]
-            
-        return res
+        ans = ""
+        for i in range(len(s), -1, -1):
+            for j in bucket[i]:
+                ans += j*i
+                
+        return ans
