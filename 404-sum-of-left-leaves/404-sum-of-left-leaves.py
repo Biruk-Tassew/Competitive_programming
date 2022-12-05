@@ -13,7 +13,7 @@ class Solution:
         if not node:
             return 
         
-        self.dfs(node.left, node)
         if parent and parent.left == node and not node.left and not node.right:
             self.res += node.val
+        self.dfs(node.left, node)
         self.dfs(node.right, node)
