@@ -9,9 +9,12 @@ class Solution:
                 else:
                     stack.append((s[i],i))
                     
-        s = list(s)
-        devi = 0
+        res = []
+        to_be_jumped = set()
         for i in stack:
-            s.pop(i[1]-devi)
-            devi += 1
-        return s
+            to_be_jumped.add(i[1])
+        for i in range(len(s)):
+            if i not in to_be_jumped:
+                res.append(s[i])
+                
+        return res 
