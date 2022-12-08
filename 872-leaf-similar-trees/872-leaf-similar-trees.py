@@ -10,16 +10,15 @@ class Solution:
         return self.dfs(root1)==self.dfs(root2)
     
     def dfs(self, node):
-        res = []
-        stack = [node]
-        while stack: 
-            node = stack.pop()
-            
-            if node.left:
-                stack.append(node.left)
-            if node.right:
-                stack.append(node.right)
-            elif not node.left:
-                res.append(node.val)
-            
-        return res
+        if not node:
+            return []
+        
+        if not node.left and not node.right:
+            return [node.val]
+        
+        
+        return self.dfs(node.left) + self.dfs(node.right)
+        
+        
+        
+        
