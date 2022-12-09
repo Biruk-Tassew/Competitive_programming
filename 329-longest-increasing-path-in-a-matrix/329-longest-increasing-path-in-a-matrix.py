@@ -2,6 +2,7 @@ class Solution:
     def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
         self.memo = defaultdict(lambda:-1)
         self.matrix = matrix
+        self.directions = [(0, 1), (1, 0), (-1, 0), (0, -1)]
         ans = -1
         for row in range(len(matrix)):
             for col in range(len(matrix[0])):
@@ -16,10 +17,9 @@ class Solution:
         if self.memo[(row, col)] != -1:
             return self.memo[(row, col)]
         
-        left = self.solve(row, col-1, self.matrix[row][col])
-        right = self.solve(row, col+1, self.matrix[row][col])
-        up = self.solve(row-1, col, self.matrix[row][col])
-        down = self.solve(row+1, col, self.matrix[row][col])
+        max_val = 0
+        for i in self.directions:
+            max_val = max(max_val, self.solve(row+i[0], col+i[1], self.matrix[row][col]))
         
-        self.memo[(row, col)] = max(left, right, up, down) + 1
+        self.memo[(row, col)] = max_val + 1
         return self.memo[(row, col)]
