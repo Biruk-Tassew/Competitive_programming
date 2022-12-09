@@ -16,14 +16,14 @@ class Solution:
         self.color[(row, col)] = "G"
         
         for i in self.directions:
-            n_r = row+i[0]
-            n_c = col+i[1]
+            n_r = row + i[0]
+            n_c = col + i[1]
             
-            if 0<=n_r<len(grid) and 0<=n_c<len(grid[0]) and grid[n_r][n_c] == grid[row][col] and (n_r, n_c) != (prev_row, prev_col):
-                if self.color[(n_r, n_c)] == "G" or (self.color[(n_r, n_c)]=="W" and self.dfs(n_r, n_c, row, col, grid)):
+            if 0<=n_r<len(grid) and 0<=n_c<len(grid[0]) and (n_r,n_c) != (prev_row, prev_col) and grid[row][col] == grid[n_r][n_c]:
+                if self.color[(n_r,n_c)] == "G" or (self.color[(n_r, n_c)]=="W" and self.dfs(n_r,n_c,row,col,grid)):
                     return True
-        
-        self.color[(row, col)] = "B"
+                
+        self.color[(row,col)] = "B"
         return False
         
         
