@@ -6,7 +6,7 @@ class Solution:
     def dfs(self, row, col):
         if row < 0 or col < 0:
             return 0
-        if not row and not col:
+        if not row or not col:
             return 1
         
         if self.memo[(row, col)] != -1:
