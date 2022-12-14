@@ -1,13 +1,16 @@
 class Solution:
     def maxProduct(self, nums: List[int]) -> int:
-        dp = [[nums[0], nums[0]]]
-        max_overall = nums[0]
+        self.memo = {0:[nums[0], nums[0]]}
+        self.nums = nums
+        self.solve(len(nums)-1)
         
-        for i in range(1, len(nums)):
-            if nums[i] < 0:
-                dp[i-1][0], dp[i-1][1] = dp[i-1][1], dp[i-1][0]
-                
-            dp.append([max(nums[i], dp[i-1][0]*nums[i]), min(nums[i], dp[i-1][1]*nums[i])])
-            max_overall = max(max_overall, dp[i][0])
+        return max(self.memo[i][0] for i in self.memo)
+    
+    def solve(self, cur_idx):
+        if cur_idx in self.memo:
+            return self.memo[cur_idx]
         
-        return max_overall
+        temp = self.solve(cur_idx-1)
+        self.memo[cur_idx] = [max(self.nums[cur_idx], self.nums[cur_idx]*temp[0], self.nums[cur_idx]*temp[1]), min(self.nums[cur_idx], self.nums[cur_idx]*temp[0], self.nums[cur_idx]*temp[1])]
+        
+        return self.memo[cur_idx]
