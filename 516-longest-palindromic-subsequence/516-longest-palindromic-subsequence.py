@@ -1,23 +1,13 @@
 class Solution:
     def longestPalindromeSubseq(self, s: str) -> int:
-        self.memo = defaultdict(lambda:-1)
-        return self.solve(0, len(s)-1, s)
+        dp = [[0]*(len(s)) for _ in range(len(s))]
+        for i in range(len(s)-1, -1, -1):
+            dp[i][i] = 1
+            for j in range(i+1, len(s)):
+                if s[i] == s[j]:
+                    dp[i][j] = dp[i+1][j-1] + 2
+                else:
+                    dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+                
+        return dp[0][-1]
     
-    def solve(self, left_idx, right_idx, s):
-        if left_idx == right_idx:
-            return 1
-        if left_idx > right_idx:
-            return 0
-        if self.memo[(left_idx, right_idx)] != -1:
-            return self.memo[(left_idx, right_idx)]
-        res = 0 
-        if s[left_idx] == s[right_idx]:
-            self.memo[(left_idx, right_idx)] = self.solve(left_idx+1, right_idx-1, s) + 2
-            return self.memo[(left_idx, right_idx)]
-            
-        
-        self.memo[(left_idx, right_idx)] = max(self.solve(left_idx+1, right_idx, s), self.solve(left_idx, right_idx-1, s))
-        return self.memo[(left_idx, right_idx)]
-        
-            
-        
