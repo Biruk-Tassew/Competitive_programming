@@ -1,24 +1,20 @@
 class Solution:
-    def evalRPN(self, tokens: List[str]) -> int:
-        stack = []
-        
+    def evalRPN(self, tokens: list[str]) -> int:
+        if len(tokens)==1:
+            return int(tokens[0])
+        comp = []
         for i in tokens:
-            if i.isdigit() or len(i) > 1:
-                stack.append(i)
+            if not(i == "+" or i == "-" or i == "*" or i == "/"):
+                comp.append(i)
+
             else:
-                opd_one = stack.pop()
-                opd_two = stack.pop()
-                if i == "+":
-                    stack.append(str(int(opd_two)+int(opd_one)))
-                elif i == "-":
-                    stack.append(str(int(opd_two)-int(opd_one)))
-                elif i == "*":
-                    stack.append(str(int(opd_two)*int(opd_one)))
-                else:
-                    if int(opd_one) * int(opd_two) < 0:
-                        stack.append(str(-1*(int(opd_two)//(-1*int(opd_one)))))
-                    else:
-                        stack.append(str(int(opd_two)//int(opd_one)))
-                        
+                outPut = 0
+                operand_2 = comp.pop()
+                operand_1 = comp.pop()
                 
-        return int(stack[-1])
+                outPut = eval(str(operand_1) + i + str(operand_2))
+                if i == '/':
+                    outPut = math.trunc(outPut)
+                comp.append(outPut)
+                    
+        return comp.pop()
