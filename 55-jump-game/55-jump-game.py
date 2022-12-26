@@ -4,9 +4,11 @@ class Solution:
         dp[-1] = True
         
         for i in range(len(nums)-2, -1, -1):
-            for j in range(i+1, min(nums[i]+i+1, len(nums))):
+            for j in range(i+1, max(0, i+nums[i])+1):
                 if dp[j]:
                     dp[i] = True
                     break
                     
         return dp[0]
+                    
+        
