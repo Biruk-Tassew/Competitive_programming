@@ -1,30 +1,21 @@
 class RandomizedSet:
-
     def __init__(self):
-        self.nums = []
-        self.indices = {}
+        self.rand_set = set()
 
     def insert(self, val: int) -> bool:
-        if val in self.indices:
+        if val in self.rand_set:
             return False
-        self.nums.append(val)
-        self.indices[val] = len(self.nums)-1
+        self.rand_set.add(val)
         return True
 
     def remove(self, val: int) -> bool:
-        if val not in self.indices:
+        if val not in self.rand_set:
             return False
-        last_val = self.nums[-1]
-        val_idx = self.indices[val]
-        self.nums[val_idx] = last_val
-        self.indices[last_val] = val_idx
-        self.nums.pop()
-        self.indices.pop(val, 0)
+        self.rand_set.remove(val)
         return True
 
     def getRandom(self) -> int:
-        return self.nums[randint(0, len(self.nums)-1)]
-
+        return random.sample(self.rand_set, 1)[0]
 
 # Your RandomizedSet object will be instantiated and called as such:
 # obj = RandomizedSet()
