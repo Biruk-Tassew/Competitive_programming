@@ -1,20 +1,22 @@
 class Solution:
     def minFlipsMonoIncr(self, s: str) -> int:
-        return self.solve(0, "0", s)
-    
-    @cache  
-    def solve(self, cur_idx, prev_str, s):
-        if cur_idx == len(s):
-            return 0
+        zeros = 0
         
-        min_flip = float('inf')
-        
-        if prev_str == s[cur_idx]:
-            min_flip = min(min_flip, self.solve(cur_idx+1, s[cur_idx], s))
-        else:
-            if prev_str == "1":
-                min_flip = min(min_flip, self.solve(cur_idx+1, "1", s)+1)
-            else:
-                min_flip = min(self.solve(cur_idx+1, s[cur_idx], s), self.solve(cur_idx+1, "0", s)+1)
+        for i in s:
+            if i == "0":
+                zeros += 1
                 
-        return min_flip
+        
+        ans = zeros
+        zeros_in_right = zeros
+        for i in s:
+            if i == "0":
+                zeros_in_right -= 1
+                ans = min(ans, zeros_in_right)
+            else:
+                zeros_in_right += 1
+                
+        return ans
+            
+        
+            
