@@ -1,17 +1,17 @@
 class Solution:
     def matrixBlockSum(self, mat: List[List[int]], k: int) -> List[List[int]]:
-        m, n = len(mat), len(mat[0])
-        mat[:] = [[0] * (n + 1)] + [[0] + row for row in mat]
-        res = [[0] * n for i in range(m)]
 
-        for i in range(1, m + 1):
-            for j in range(1, n + 1):
-                mat[i][j] += mat[i - 1][j] + mat[i][j - 1] - mat[i - 1][j - 1]
+        new_matrix = [[0] * (len(mat[0]) + 1)] + [[0] + row for row in mat]
+        res = [[0] * len(mat[0]) for i in range(len(mat))]
+
+        for i in range(1, len(mat) + 1):
+            for j in range(1, len(mat[0]) + 1):
+                new_matrix[i][j] += new_matrix[i - 1][j] + new_matrix[i][j - 1] - new_matrix[i - 1][j - 1]
                 
-        for i in range(m):
-            for j in range(n):
-                r1, r2 = max(i - k, 0), min(i + k + 1, m)
-                c1, c2 = max(j - k, 0), min(j + k + 1, n)
-                res[i][j] = mat[r2][c2] - mat[r2][c1] - mat[r1][c2] + mat[r1][c1]
+        for row in range(len(mat)):
+            for col in range(len(mat[0])):
+                n_r1, n_r2 = max(row - k, 0), min(row + k + 1, len(mat))
+                n_c1, n_c2 = max(col - k, 0), min(col + k + 1, len(mat[0]))
+                res[row][col] = new_matrix[n_r2][n_c2] - new_matrix[n_r2][n_c1] - new_matrix[n_r1][n_c2] + new_matrix[n_r1][n_c1]
 
         return res
