@@ -1,17 +1,15 @@
 class Solution:
     def minimumOperations(self, nums: List[int]) -> int:
         
+        heapify(nums)
         count = 0
         while sum(nums):
-            min_num = float('inf')
+            if nums[0]:
+                min_num = nums[0]
+                nums = [num - min_num for num in nums]
+                count += 1
+            else:
+                heappop(nums)
             
-            for i in nums:
-                if i and i < min_num:
-                    min_num = i
-            
-            for i in range(len(nums)):
-                if nums[i]:
-                    nums[i] -= min_num
-            count += 1
                     
         return count
