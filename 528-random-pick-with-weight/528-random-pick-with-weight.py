@@ -1,9 +1,9 @@
 class Solution:
 
     def __init__(self, w: List[int]):
-        for i in range(1, len(w)):
-            w[i] += w[i-1] 
         self.weight = w
+        for i in range(1, len(self.weight)):
+            self.weight[i] += self.weight[i-1]
         
 
     def pickIndex(self) -> int:
