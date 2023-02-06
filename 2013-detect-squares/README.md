@@ -1,4 +1,4 @@
-<h2><a href="https://leetcode.com/problems/detect-squares/">2013. Detect Squares</a></h2><h3>Medium</h3><hr><div bis_skin_checked="1"><p>You are given a stream of points on the X-Y plane. Design an algorithm that:</p>
+<h2><a href="https://leetcode.com/problems/detect-squares/">2013. Detect Squares</a></h2><h3>Medium</h3><hr><div><p>You are given a stream of points on the X-Y plane. Design an algorithm that:</p>
 
 <ul>
 	<li><strong>Adds</strong> new points from the stream into a data structure. <strong>Duplicate</strong> points are allowed and should be treated as different points.</li>
