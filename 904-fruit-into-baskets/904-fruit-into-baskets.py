@@ -10,7 +10,7 @@ class Solution:
         while right < len(fruits):
             basket[fruits[right]] += 1
             
-            while len(basket) > 2:
+            if len(basket) > 2:
                 basket[fruits[left]] -= 1
                 
                 if not basket[fruits[left]]:
