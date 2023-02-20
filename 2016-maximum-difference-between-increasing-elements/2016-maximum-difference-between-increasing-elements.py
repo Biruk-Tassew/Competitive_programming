@@ -1,13 +1,15 @@
 class Solution:
     def maximumDifference(self, nums: List[int]) -> int:
+        cur_min = nums[0]
+        max_num = -1
         
-        max_num = float('-inf')
-        
-        for i in range(len(nums)):
-            for j in range(i+1, len(nums)):
-                if  nums[j] > nums[i]:
-                    max_num = max(max_num, nums[j]-nums[i])
-                
-        if max_num != float('-inf'):
+        for i in range(1, len(nums)):
+            
+            max_num = max(max_num, nums[i] - cur_min)
+            cur_min = min(cur_min, nums[i])
+            
+            
+        if max_num:
             return max_num
         return -1
+            
