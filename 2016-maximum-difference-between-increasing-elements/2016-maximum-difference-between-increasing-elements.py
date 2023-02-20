@@ -4,12 +4,10 @@ class Solution:
         max_num = -1
         
         for i in range(1, len(nums)):
-            
             max_num = max(max_num, nums[i] - cur_min)
             cur_min = min(cur_min, nums[i])
             
-            
-        if max_num:
+        if max_num > 0:
             return max_num
         return -1
             
