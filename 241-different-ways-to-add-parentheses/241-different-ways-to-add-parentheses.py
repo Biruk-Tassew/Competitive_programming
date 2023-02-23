@@ -1,10 +1,14 @@
 class Solution:
     def diffWaysToCompute(self, expression: str) -> List[int]:
+        self.memo = defaultdict(lambda: "")
         return self.solve(expression)
         
     def solve(self, expression):
         if expression.isdigit():
             return [int(expression)]
+        
+        if self.memo[expression] != "":
+            return self.memo[expression]
         
         res = []
         
@@ -17,4 +21,5 @@ class Solution:
                     for right in right_exps:
                         res.append(eval(str(left) + expression[i] + str(right)))
                         
-        return res
+        self.memo[expression] = res
+        return self.memo[expression]
