@@ -15,24 +15,15 @@ class Solution:
         self.grid = grid
         return self.buildGraph(0, 0, len(grid))
     def buildGraph(self, row, col, sideLen):
-        check_all = True
-        prev_val = self.grid[row][col]
-        for r in range(row, row+sideLen):
-            for c in range(col, col+sideLen):
-                if self.grid[r][c] != prev_val:
-                    check_all = False
-                    break
-            if not check_all:
-                break
-        if check_all:
-            return Node(prev_val, True)
+        if sideLen == 1:
+            return Node(self.grid[row][col], True)
         
-        root = Node(prev_val, False)
-        
-        root.topLeft = self.buildGraph(row, col, sideLen//2)
-        root.topRight = self.buildGraph(row, col+sideLen//2, sideLen//2)
-        root.bottomLeft = self.buildGraph(row+sideLen//2, col, sideLen//2)
-        root.bottomRight = self.buildGraph(row+sideLen//2, col+sideLen//2, sideLen//2)
+        topLeft = self.buildGraph(row, col, sideLen//2)
+        topRight = self.buildGraph(row, col+sideLen//2, sideLen//2)
+        bottomLeft = self.buildGraph(row+sideLen//2, col, sideLen//2)
+        bottomRight = self.buildGraph(row+sideLen//2, col+sideLen//2, sideLen//2)
             
-        return root
-        
+        if topLeft.isLeaf and topRight.isLeaf and bottomLeft.isLeaf and bottomRight.isLeaf and topLeft.val == topRight.val == bottomLeft.val == bottomRight.val:
+            return Node(topLeft.val, True)
+    
+        return Node(topLeft.val, False, topLeft, topRight, bottomLeft, bottomRight)
