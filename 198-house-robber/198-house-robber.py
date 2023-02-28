@@ -1,12 +1,16 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        if len(nums) == 1:
-            return nums[0]
-        dp = [0]*len(nums)
-        dp[0] = nums[0]
-        dp[1] = max(nums[1],  nums[0])
+        self.memo = defaultdict(lambda: -1)
+        return self.dfs(len(nums)-1, nums)
+    
+    def dfs(self, cur_idx, nums):
+        if cur_idx < 0:
+            return 0
+        if cur_idx == 1:
+            return max(nums[1], nums[0])
         
-        for i in range(2, len(nums)):
-            dp[i] = max(dp[i-1], dp[i-2]+nums[i])
-            
-        return dp[-1]
+        if self.memo[cur_idx] != -1:
+            return self.memo[cur_idx]
+        
+        self.memo[cur_idx] = max(self.dfs(cur_idx-1, nums), self.dfs(cur_idx-2, nums)+nums[cur_idx])
+        return self.memo[cur_idx]
