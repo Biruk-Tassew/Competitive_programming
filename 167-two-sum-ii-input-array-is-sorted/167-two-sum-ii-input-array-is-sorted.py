@@ -4,7 +4,7 @@ class Solution:
         for i in range(len(numbers)):
             
             diff = target-numbers[i]
-            left = 0
+            left = i+1
             right = len(numbers)
             
             while left < right:
@@ -16,9 +16,5 @@ class Solution:
                 elif numbers[mid] < diff:
                     left = mid + 1
                 else:
-                    if mid != i:
-                        return [i+1, mid+1]
-                    else:
-                        if mid < len(numbers)-1 and numbers[mid+1] == diff:
-                            return [i+1, mid+2]
+                    return [i+1, mid+1]
        
