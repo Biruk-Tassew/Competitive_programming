@@ -1,20 +1,18 @@
 class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
             
-        for i in range(len(numbers)):
+        left = 0
+        right = len(numbers)-1
+        
+        while left < right:
+            cur_sum = numbers[left]+numbers[right]
             
-            diff = target-numbers[i]
-            left = i+1
-            right = len(numbers)
-            
-            while left < right:
+            if cur_sum == target:
+                return [left+1, right+1]
+            elif cur_sum < target:
+                left += 1
+            else:
+                right -= 1
                 
-                mid = (left+right)//2
                 
-                if numbers[mid] > diff:
-                    right = mid
-                elif numbers[mid] < diff:
-                    left = mid + 1
-                else:
-                    return [i+1, mid+1]
-       
+        
