@@ -1,11 +1,19 @@
 class Solution:
     def maxAlternatingSum(self, nums: List[int]) -> int:
+        self.memo = defaultdict(lambda: "")
+        return self.dfs(nums, 0, True)
+    
+    def dfs(self, nums, cur_idx, isEven):
+        if cur_idx == len(nums):
+            return 0
         
-        even_sums = [0]*(len(nums)+1)
-        odd_sums = [0]*(len(nums)+1)
+        if self.memo[(cur_idx, isEven)]:
+            return self.memo[(cur_idx, isEven)]
         
-        for i in range(1, len(even_sums)):
-            even_sums[i] = max(odd_sums[i-1]-nums[i-1], even_sums[i-1])
-            odd_sums[i] = max(even_sums[i-1]+nums[i-1], odd_sums[i-1])
-            
-        return odd_sums[-1]
+        num = nums[cur_idx] if isEven else -nums[cur_idx]
+        
+        take = num + self.dfs(nums, cur_idx+1, not isEven)
+        not_take = self.dfs(nums, cur_idx+1, isEven)
+        
+        self.memo[(cur_idx, isEven)] = max(take, not_take)
+        return self.memo[(cur_idx, isEven)]
