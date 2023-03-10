@@ -1,16 +1,24 @@
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
         left = 1
-        right = max(piles)
+        right = 10**9
         
-        while left <= right:
+        while left < right:
             mid = (left+right)//2
             
-            cur_hr = sum(ceil(p/mid) for p in piles)
-            
-            if cur_hr <= h:
-                right = mid - 1
+            if self.decide(piles, mid, h):
+                right = mid
             else:
                 left = mid + 1
                 
         return left
+            
+    def decide(self, nums, k, hr):
+        cur_hr = 0
+        for num in nums:
+            cur_hr += ceil(num/k)
+            
+            if cur_hr > hr:
+                return False
+            
+        return True
