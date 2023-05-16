@@ -17,13 +17,16 @@ class Solution:
             n_r = row + i[0]
             n_c = col + i[1]
             
-            if 0 <= n_r < len(grid) and 0 <= n_c < len(grid[0]) and (n_r, n_c) not in visited:
+            if (n_r, n_c) in visited:
+                continue
+            
+            if 0 <= n_r < len(grid) and 0 <= n_c < len(grid[0]):
                 
                 if not grid[n_r][n_c]:
                     cur_cnt += 1
                 elif grid[n_r][n_c] == 1:
                     self.dfs(n_r, n_c, grid, visited, directions)
-            elif (n_r, n_c) not in visited:
+            else:
                 cur_cnt += 1
             
         self.count += cur_cnt 
